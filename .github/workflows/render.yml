@@ -17,15 +17,26 @@ jobs:
         with:
           node-version: 20
 
-      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg unzip
 
-      - run: npm install
+      - name: Extract original project
+        run: |
+          mkdir -p extracted
+          unzip -o pencil-story.zip -d extracted
 
-      - run: npx remotion browser ensure
-
-      - run: npm run render
+      - name: Find project and render video
+        run: |
+          PROJECT_DIR=$(dirname "$(find extracted -name package.json -print -quit)")
+          echo "Project folder: $PROJECT_DIR"
+          cd "$PROJECT_DIR"
+          npm install
+          npx remotion browser ensure
+          npm run render
 
       - uses: actions/upload-artifact@v4
         with:
           name: story-mp4
-          path: out/story.mp4
+          path: extracted/**/out/story.mp4
