@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "remotion studio",
-    "render": "remotion render src/index.ts Story out/story.mp4 --codec=h264 --audio-codec=aac",
-    "still": "remotion still src/index.ts Story out/preview.png --frame=60"
+"render": "remotion render index.ts Story out/story.mp4 --codec=h264 --audio-codec=aac",
+"still": "remotion still index.ts Story out/preview.png --frame=60"
   },
   "dependencies": {
     "@remotion/cli": "^4.0.0",
